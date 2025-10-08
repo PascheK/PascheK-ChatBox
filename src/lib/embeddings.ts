@@ -21,5 +21,3 @@ export async function generateEmbeddings(texts: string[]) {
   });
   return embeddings;
 }
-
-

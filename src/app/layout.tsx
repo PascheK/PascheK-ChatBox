@@ -1,37 +1,40 @@
-import { type Metadata } from 'next'
-import { Navigation } from '@/components/navigation'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
+import { type Metadata } from "next";
+import { Navigation } from "@/components/navigation";
+import { Geist, Geist_Mono } from "next/font/google";
+import { getCurrentUser } from "@/lib/auth";
+import { UserProvider } from "@/context/UserContext";
+import "./globals.css";
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: 'PascheK ChatBox',
-  description: 'ChatBox made by PascheK',
-}
+  title: "PascheK ChatBox",
+  description: "ChatBox made by PascheK",
+};
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
+  const user = await getCurrentUser();
+
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en">
+      <UserProvider initialUser={user}>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <Navigation />
           {children}
         </body>
-      </html>
-    </ClerkProvider>
-  )
+      </UserProvider>
+    </html>
+  );
 }

@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1759519099789,
-      "tag": "0000_modern_warbound",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1759519207540,
-      "tag": "0001_overrated_mimic",
+      "when": 1759742921814,
+      "tag": "0000_plain_big_bertha",
       "breakpoints": true
     }
   ]
