@@ -2,7 +2,6 @@ import { generateEmbedding } from "@/lib/embeddings";
 import { documents, sources } from "./db-schema";
 import { cosineDistance, desc, gt, sql, eq } from "drizzle-orm";
 import { db } from "./db-config";
-import path from "path";
 
 export async function searchDocuments(query: string, limit: number = 5, treshold: number = 0.5) {
   const embedding = await generateEmbedding(query);

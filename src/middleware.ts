@@ -1,9 +1,8 @@
-const PublicRoute = ["/", "/login", "/register"];
-const protectedRoutes = ["/chat", "/api", "/upload"];
+const PublicRoute = ["/", "/login", "/signup"];
+const protectedRoutes = ["/chat", "/api", "/upload", "/dashboard"];
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt, clearSession } from "./lib/session";
-import { ca } from "date-fns/locale";
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -13,7 +12,6 @@ export default async function middleware(req: NextRequest) {
     const cookie = (await cookies()).get("session")?.value;
 
     const session = await decrypt(cookie);
-    console.log(session?.exp);
     const isExpired = session?.exp && Date.now() / 1000 > session.exp;
     if (session) {
       if ((isProtectedRoute && !session?.userId) || isExpired) {
@@ -22,17 +20,16 @@ export default async function middleware(req: NextRequest) {
       }
 
       if (isPublicRoute && session?.userId) {
-        return NextResponse.redirect(new URL("/chat", req.nextUrl));
+        return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
       }
     }
-  } catch (err) {
-    console.log("Error in middleware:", err);
+  } catch {
     if (isProtectedRoute) {
       clearSession();
       return NextResponse.redirect(new URL("/login", req.nextUrl));
     }
   } finally {
-    // biome-ignore lint/correctness/noUnsafeFinally: forcer le return pour nextResponse
+    // eslint-disable-next-line no-unsafe-finally
     return NextResponse.next();
   }
 }

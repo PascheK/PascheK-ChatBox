@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useUser } from "@/context/UserContext";
-import { login } from "./actions";
+import { login } from "@/actions";
 export default function LoginPage() {
   const [state, loginAction] = useActionState(login, undefined);
   const { setUser } = useUser();

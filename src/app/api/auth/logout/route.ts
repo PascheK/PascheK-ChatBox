@@ -1,11 +1,7 @@
+import { NextResponse } from "next/server";
 import { clearSession } from "@/lib/session";
 
 export async function POST() {
   await clearSession();
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: "/login",
-    },
-  });
+  return NextResponse.json({ success: true });
 }

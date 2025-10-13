@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { register } from "./actions";
+import { register } from "@/actions";
 import { useActionState, useEffect } from "react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
@@ -92,8 +92,10 @@ export default function RegisterPage() {
             <AlertDescription>
               <ul className="mt-1 list-disc list-inside text-xs">
                 {Object.entries(state.errors).map(([field, messages]) =>
-                  messages
-                    ? messages.map((message) => <li key={`${field}-error`}>{message}</li>)
+                  Array.isArray(messages)
+                    ? messages.map((message, idx) => (
+                        <li key={`${field}-error-${idx}`}>{message}</li>
+                      ))
                     : null
                 )}
               </ul>

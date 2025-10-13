@@ -31,7 +31,6 @@ export default async function RootLayout({
     <html lang="en">
       <UserProvider initialUser={user}>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <Navigation />
           {children}
         </body>
       </UserProvider>

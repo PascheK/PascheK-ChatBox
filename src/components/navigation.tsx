@@ -25,14 +25,15 @@ export function Navigation() {
       await fetch("/api/auth/logout", { method: "POST" });
       setUser(null);
       router.push("/login");
-    } catch (error) {
-      console.error("Erreur lors de la déconnexion:", error);
+      router.refresh();
+    } catch {
+      // Error handled silently
     } finally {
       setIsLoggingOut(false);
     }
   };
 
-  const isActivePage = (href: string) => pathname === href;
+  const isActivePage = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   const getUserInitials = () => {
     if (user?.firstname && user?.lastname) {
@@ -49,7 +50,7 @@ export function Navigation() {
   };
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-background border-b border-border shadow-sm">
+    <nav className="flex items-center justify-between px-6 py-4 bg-background border-b border-border shadow-sm relative z-50">
       <div className="flex items-center gap-8">
         <Link 
           href={user ? "/chat" : "/"} 
@@ -60,16 +61,18 @@ export function Navigation() {
         
         {user && (
           <div className="hidden md:flex gap-6">
-            <Link 
-              href="/chat" 
+            <Link
+              href="/chat"
+              aria-current={isActivePage('/chat') ? 'page' : undefined}
               className={`hover:text-primary transition-colors ${
                 isActivePage('/chat') ? 'text-primary font-medium' : 'text-muted-foreground'
               }`}
             >
               Chat
             </Link>
-            <Link 
-              href="/upload" 
+            <Link
+              href="/upload"
+              aria-current={isActivePage('/upload') ? 'page' : undefined}
               className={`hover:text-primary transition-colors ${
                 isActivePage('/upload') ? 'text-primary font-medium' : 'text-muted-foreground'
               }`}
@@ -123,7 +126,7 @@ export function Navigation() {
               <Link href="/login">Se connecter</Link>
             </Button>
             <Button asChild>
-              <Link href="/register">S'inscrire</Link>
+              <Link href="/signup">S'inscrire</Link>
             </Button>
           </div>
         )}
