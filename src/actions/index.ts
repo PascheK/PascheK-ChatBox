@@ -12,3 +12,6 @@ export * from "./upload";
 
 // Export des actions de gestion des chats
 export * from "./chat";
+
+// Export des actions de recherche
+export * from "./search";

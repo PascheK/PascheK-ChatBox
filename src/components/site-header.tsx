@@ -23,7 +23,7 @@ export function SiteHeader() {
         </Button>
         <Separator orientation="vertical" className="mr-2 h-4" />
         <AppBreadcrumb rootLabel="Accueil" />
-        <SearchForm className="w-full sm:ml-auto sm:w-auto" />
+        <SearchForm/>
       </div>
     </header>
   )

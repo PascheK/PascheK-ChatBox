@@ -13,7 +13,7 @@ import { chats } from "@/lib/db-schema";
 import { db } from "@/lib/db-config";
 import { getCurrentUser } from "@/services/auth-service";
 import { eq, desc, and } from "drizzle-orm";
-
+import { generateId } from "ai";
 /**
  * Génère automatiquement un titre de chat à partir du premier message utilisateur
  * @param messages - Tableau des messages de la conversation
@@ -162,7 +162,7 @@ export async function createNewChat(title?: string) {
     throw new Error("Non authentifié");
   }
 
-  const chatId = crypto.randomUUID();
+  const chatId = generateId();
   
   await db
     .insert(chats)
