@@ -3,7 +3,7 @@ name: Build & Release PascheK Chatbox
 on:
   push:
     tags:
-      - "v*" # ex: v1.0.0 déclenche un build complet
+      - "v*" # ex: v1.0.0
 
 jobs:
   build:
@@ -22,13 +22,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "yarn"
+          cache: "npm"
 
       - name: 📦 Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: 🛠 Build application
-        run: yarn build
+        run: npm run build
 
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
