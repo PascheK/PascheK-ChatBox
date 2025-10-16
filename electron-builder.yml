@@ -1,0 +1,35 @@
+appId: com.paschek.chatbox
+productName: PascheK Chatbox
+directories:
+  output: dist
+  buildResources: assets
+
+# 🧠 Le fichier principal (compilé par tsc)
+files:
+  - dist-electron/**
+  - .next/**
+  - package.json
+
+# ✅ Active ASAR (obligatoire sinon erreur index.js)
+asar: true
+
+# 🍏 macOS config
+mac:
+  target:
+    - dmg
+  category: public.app-category.productivity
+
+# 🪟 Windows config
+win:
+  target:
+    - nsis
+    - zip
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+
+extraMetadata:
+  main: "dist-electron/main.cjs"

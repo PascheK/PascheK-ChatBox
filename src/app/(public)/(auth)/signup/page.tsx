@@ -10,7 +10,7 @@ import { useActionState, useEffect } from "react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
 import { useUser } from "@/context/UserContext";
-
+export const dynamic = 'force-dynamic'; // ⚠️⚠️⚠️ THIS IS REQUIRED TO ENSURE PAGE IS DYNAMIC, NOT PRE-BUILT
 export default function RegisterPage() {
   const router = useRouter();
   const { setUser } = useUser();

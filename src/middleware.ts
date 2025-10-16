@@ -11,8 +11,8 @@ export default async function middleware(req: NextRequest) {
   try {
     const cookie = (await cookies()).get("session")?.value;
 
-    const session = await decrypt(cookie);
-    const isExpired = session?.exp && Date.now() / 1000 > session.exp;
+  const session = await decrypt(cookie);
+  const isExpired = (session?.exp ?? 0) !== 0 && Date.now() / 1000 > (session?.exp ?? 0);
     if (session) {
       if ((isProtectedRoute && !session?.userId) || isExpired) {
         clearSession();

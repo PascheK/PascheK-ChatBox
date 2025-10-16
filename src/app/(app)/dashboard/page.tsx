@@ -9,6 +9,7 @@ import { getCurrentUser } from "@/services/auth-service";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QuickActions } from "@/components/quick-actions";
+  export const dynamic = 'force-dynamic'; // ⚠️⚠️⚠️ THIS IS REQUIRED TO ENSURE PAGE IS DYNAMIC, NOT PRE-BUILT
 
 // ---------- Helpers ----------
 function formatDate(d: Date | string | null | undefined) {

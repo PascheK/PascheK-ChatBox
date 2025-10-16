@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import { Navigation } from "@/components/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import { getCurrentUser } from "@/lib/auth";
 import { UserProvider } from "@/context/UserContext";

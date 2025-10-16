@@ -7,7 +7,6 @@ import {
   integer,
   text,
   timestamp,
-  boolean,
   jsonb,
   index,
   uniqueIndex,
@@ -15,7 +14,6 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { vector } from "drizzle-orm/pg-core"; // pgvector
-import { title } from "process";
 // Si tu utilises des enums pour role, etc., tu peux les définir ici.
 
 // ------------------------- USERS -------------------------

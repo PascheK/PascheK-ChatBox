@@ -1,5 +1,5 @@
 import "server-only";
-import { SignJWT, jwtVerify } from "jose";
+import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 import { cookies } from "next/headers";
 
 const secretKey = process.env.SESSION_SECRET;
@@ -31,13 +31,15 @@ export async function encrypt(payload: SessionPayload) {
     .setExpirationTime("7d")
     .sign(encodedKey);
 }
-export async function decrypt(session: string | undefined = "") {
+export async function decrypt(
+  session: string | undefined = ""
+): Promise<(JWTPayload & { userId?: string }) | null> {
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ["HS256"],
     });
-    return payload;
-  } catch (err) {
-    console.log("failed to verify session");
+    return payload as JWTPayload & { userId?: string };
+  } catch {
+    return null;
   }
 }

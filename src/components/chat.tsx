@@ -122,7 +122,9 @@ export function Chat ({
                     <div key={`${message.id}-${index}-assistant`}>
                       <Message from={message.role}>
                         <MessageContent>
-                          <Response>{message.content}</Response>
+                          <Response>
+                            {(message as any).text || ""}
+                          </Response>
                         </MessageContent>
                       </Message>
                     </div>

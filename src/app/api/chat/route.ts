@@ -16,6 +16,7 @@ import { getCurrentUser } from "@/lib/auth";
 import {
   createMessage,
 } from "@/services/chat-service";
+  export const dynamic = 'force-dynamic'; // ⚠️⚠️⚠️ THIS IS REQUIRED TO ENSURE PAGE IS DYNAMIC, NOT PRE-BUILT
 
 export type ChatTools = InferUITools<{
   searchKnowledgeBase: ReturnType<typeof tool>;
@@ -76,9 +77,8 @@ export async function POST(req: Request) {
                     sources,
                   };
                 } catch (err) {
-                  console.error("Error searching documents:", err);
                   return {
-                    content: "Error searching documents.",
+                    content: "Error searching documents.",err,
                     sources: [],
                   };
                 }
@@ -105,7 +105,6 @@ export async function POST(req: Request) {
 
     return createUIMessageStreamResponse({ stream });
   } catch (error) {
-    console.error("Error streaming chat response:", error);
-    return new Response("Failed to stream chat completion", { status: 500 });
+    return new Response(`${error}`, { status: 500 });
   }
 }

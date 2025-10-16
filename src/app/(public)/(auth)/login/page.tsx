@@ -8,11 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Label } from "@/components/ui/label";
 import { useUser } from "@/context/UserContext";
 import { login } from "@/actions";
+  export const dynamic = 'force-dynamic'; // ⚠️⚠️⚠️ THIS IS REQUIRED TO ENSURE PAGE IS DYNAMIC, NOT PRE-BUILT
+
 export default function LoginPage() {
   const [state, loginAction] = useActionState(login, undefined);
   const { setUser } = useUser();
   const router = useRouter();
-  
   useEffect(() => {
     if (state?.success && state?.user) {
       // Mettre à jour le contexte utilisateur
