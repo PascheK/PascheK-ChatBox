@@ -29,6 +29,8 @@ jobs:
 
       - name: 🛠 Build application
         run: npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -50,5 +52,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release-builds/**/*
-      env:
+        env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
