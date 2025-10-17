@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": ".tscache/cache-electron",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "outDir": "dist-electron",
+    "rootDir": "electron",
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "include": ["electron/**/*.ts", "electron/**/*.json"]
+}

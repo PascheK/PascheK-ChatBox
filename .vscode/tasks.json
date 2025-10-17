@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Typecheck and Next build (quick)",
+			"type": "shell",
+			"command": "bash -lc 'set -e; echo TS check...; ./node_modules/.bin/tsc --noEmit; echo Next build (dry)....; ./node_modules/.bin/next build --no-lint --profile | head -n 50'",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
