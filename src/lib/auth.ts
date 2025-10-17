@@ -1,3 +1,4 @@
+'use server'
 import { decrypt } from "./session";
 import { cookies } from "next/headers";
 import { db } from "./db-config";

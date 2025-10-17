@@ -1,3 +1,4 @@
+'use server'
 const PublicRoute = ["/", "/login", "/signup"];
 const protectedRoutes = ["/chat", "/api", "/upload", "/dashboard"];
 import { cookies } from "next/headers";

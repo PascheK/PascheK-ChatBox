@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '*': ['public/**/*', '.next/static/**/*'],
   },
+  
   serverExternalPackages: ["pdf-parse",'electron'],
   eslint: {
     // Disable ESLint during next build

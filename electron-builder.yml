@@ -21,12 +21,15 @@ mac:
   target:
     - dmg
   category: public.app-category.productivity
+  icon: assets/icons/icon.icns
 
 # 🪟 Windows config
 win:
   target:
     - nsis
     - zip
+  icon: assets/icons/icon.ico
+
 
 nsis:
   oneClick: false

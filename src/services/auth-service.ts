@@ -1,4 +1,4 @@
-
+'use server'
 
 import { db } from "@/lib/db-config";
 import { users } from "@/lib/db-schema";
@@ -14,7 +14,7 @@ export type PublicUser = {
   lastname: string;
 };
 
-export function normalizeEmail(email: string) {
+export async function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
 

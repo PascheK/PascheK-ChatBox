@@ -18,7 +18,9 @@ export const metadata: Metadata = {
   title: "PascheK ChatBox",
   description: "ChatBox made by PascheK",
 };
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;                // empêche l’ISR
+export const fetchCache = "force-no-store";
 export default async function RootLayout({
   children,
 }: Readonly<{

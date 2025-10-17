@@ -3,7 +3,8 @@
 import { getCurrentUser } from "@/lib/auth";
 import { uploadFile, deleteFile } from "@/lib/storage";
 import { createHash } from "node:crypto";
-import { pdf } from "pdf-parse";
+import * as pdfLib from "pdf-parse";
+const pdf = (pdfLib as any).default ?? (pdfLib as any);
 import { chunkContent } from "@/lib/chunking";
 import { generateEmbeddings } from "@/lib/embeddings";
 import { db } from "@/lib/db-config";

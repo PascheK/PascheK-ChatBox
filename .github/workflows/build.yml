@@ -3,15 +3,14 @@ name: Build & Release PascheK Chatbox
 on:
   push:
     tags:
-      - "v*" # ex: v1.0.0
+      - "v*" # ex: v0.1.1
 
 permissions:
-  contents: write
-  packages: write
+  contents: write  # nécessaire pour créer/mettre à jour une Release
 
 jobs:
   build:
-    name: Build for ${{ matrix.os }}
+    name: Build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -19,28 +18,38 @@ jobs:
         os: [macos-latest, windows-latest]
 
     steps:
-      - name: 🧩 Checkout repository
+      - name: 🧩 Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: 🧰 Setup Node.js
+      - name: 🧰 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
+          cache: npm
 
-      - name: 📦 Install dependencies
+      - name: 📦 Install deps
         run: npm ci
 
-      - name: 🛠 Build application
-        run: npm run build
+      - name: 🛠 Build app
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          MINIO_ENDPOINT: ${{ secrets.MINIO_ENDPOINT }}
+          MINIO_PORT: ${{ secrets.MINIO_PORT }}
+          MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
+          MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_BUCKET_NAME: ${{ secrets.MINIO_BUCKET_NAME }}
+        run: npm run build
 
-      - name: 📤 Upload build artifacts
+      - name: 📤 Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: paschek-chatbox-${{ matrix.os }}
-          path: dist/
+          path: dist/**
+          if-no-files-found: error
 
   release:
     name: 🚀 Create GitHub Release

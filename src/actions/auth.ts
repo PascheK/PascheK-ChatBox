@@ -71,7 +71,7 @@ export async function register(prevState: any, formData: FormData) {
   const { email, password, firstName, lastName } = result.data;
 
   try {
-    const emailNorm = normalizeEmail(email);
+    const emailNorm = await normalizeEmail(email);
 
     // Vérifier si l'utilisateur existe déjà
     const existingUser = await findUserByEmail(emailNorm);
@@ -138,7 +138,7 @@ export async function login(prevState: any, formData: FormData) {
   const { email, password } = result.data;
 
   try {
-    const emailNorm = normalizeEmail(email);
+    const emailNorm = await normalizeEmail(email);
 
     // Chercher l'utilisateur dans la base de données
     const existingUser = await findUserByEmail(emailNorm);
