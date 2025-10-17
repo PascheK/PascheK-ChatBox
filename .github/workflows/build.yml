@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write  # nécessaire pour créer/mettre à jour une Release
+  packages: write
 
 jobs:
   build:
@@ -34,6 +35,7 @@ jobs:
 
       - name: 🛠 Build app
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
@@ -51,6 +53,7 @@ jobs:
           path: dist/**
           if-no-files-found: error
 
+
   release:
     name: 🚀 Create GitHub Release
     needs: build
@@ -60,10 +63,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: release-builds
-
       - name: 🧩 Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: release-builds/**/*
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
