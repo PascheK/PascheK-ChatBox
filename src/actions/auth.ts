@@ -31,7 +31,6 @@ import {
   verifyPassword,
 } from "@/services/auth-service";
 
-
 /**
  * Schéma de validation pour l'inscription d'un nouvel utilisateur
  * Valide les champs requis et s'assure que les mots de passe correspondent

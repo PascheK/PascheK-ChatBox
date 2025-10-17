@@ -7,11 +7,8 @@ directories:
 # 🧠 Le fichier principal (compilé par tsc)
 files:
   - dist-electron/**
-  - .next/standalone/**           
-  - .next/static/**              
-  - .next/required-server-files.json
+  - .next/**
   - package.json
-  - .env.local   
 
 # ✅ Active ASAR (obligatoire sinon erreur index.js)
 asar: true
