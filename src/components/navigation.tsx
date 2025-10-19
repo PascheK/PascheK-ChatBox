@@ -24,7 +24,7 @@ export function Navigation() {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
       setUser(null);
-      router.push("/login");
+      router.push("/auth/login");
       router.refresh();
     } catch {
       // Error handled silently
@@ -53,7 +53,7 @@ export function Navigation() {
     <nav className="flex items-center justify-between px-6 py-4 bg-background border-b border-border shadow-sm relative z-50">
       <div className="flex items-center gap-8">
         <Link 
-          href={user ? "/chat" : "/"} 
+          href={user ? "/dashboard" : "/"} 
           className="text-xl font-bold text-foreground hover:text-primary transition-colors"
         >
           PascheK ChatBox
@@ -123,10 +123,10 @@ export function Navigation() {
         ) : (
           <div className="flex gap-3">
             <Button variant="ghost" asChild>
-              <Link href="/login">Se connecter</Link>
+              <Link href="/auth/login">Se connecter</Link>
             </Button>
             <Button asChild>
-              <Link href="/signup">S'inscrire</Link>
+              <Link href="/auth/signup">S'inscrire</Link>
             </Button>
           </div>
         )}

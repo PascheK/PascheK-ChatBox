@@ -18,8 +18,8 @@ export default function LoginPage() {
     if (state?.success && state?.user) {
       // Mettre à jour le contexte utilisateur
       setUser(state.user);
-      // Rediriger vers le chat
-      router.push("/chat");
+      // Rediriger vers le tableau de bord
+      router.push("/dashboard");
     }
   }, [state, router, setUser]);
   return (
@@ -60,7 +60,7 @@ export default function LoginPage() {
               <Button
                 variant="link"
                 className="p-0 h-auto font-normal"
-                onClick={() => router.push("/signup")}
+                onClick={() => router.push("/auth/signup")}
               >
                 Créer un compte
               </Button>

@@ -38,8 +38,7 @@ function formatBytes(bytes: number | null | undefined) {
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) {
-    // Si jamais cette page est publique, on peut afficher un CTA login; sinon on redirige.
-    redirect("/login");
+    redirect("/auth/login");
   }
 
   // Stats: nombre de chats, nombre de documents, taille totale

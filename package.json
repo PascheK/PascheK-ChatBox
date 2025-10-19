@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
     "clean": "rm -rf build dist .tscache .next out",
-    "build": "npm run clean && npm run build:next && npm run build:ts && npm run build:electron",
+    "build": "npm run build:next && npm run build:ts && npm run build:electron",
     "build:next": "next build",
     "build:ts": "tsc --project tsconfig-electron.json && node scripts/rename-to-cjs.js",
     "build:electron": "electron-builder --config electron-builder.yml",

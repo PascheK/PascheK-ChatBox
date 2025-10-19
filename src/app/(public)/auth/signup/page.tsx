@@ -21,7 +21,7 @@ export default function RegisterPage() {
       // Mettre à jour le contexte utilisateur
       setUser(state.user);
       // Rediriger vers le chat
-      router.push("/chat");
+      router.push("/dashboard");
     }
   }, [state, router, setUser]);
   return (
@@ -76,7 +76,7 @@ export default function RegisterPage() {
               <Button
                 variant="link"
                 className="p-0 h-auto font-normal"
-                onClick={() => router.push("/login")}
+                onClick={() => router.push("/auth/login")}
               >
                 Se connecter
               </Button>

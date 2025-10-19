@@ -66,7 +66,7 @@ export function NavChats() {
       if (user) {
         await refetch()
       } else {
-        router.push("/login")
+        router.push("/auth/login")
       }
     }
     run()

@@ -115,3 +115,67 @@ export async function deleteDocument(sourceId: number) {
   }
   return { success: true };
 }
+
+export async function getDocumentUrl(sourceId: number) {
+  const user = await getCurrentUser();
+  if (!user) return { success: false, error: "Unauthorized", url: null };
+
+  const [row] = await db
+    .select({
+      id: sources.id,
+      userId: sources.userId,
+      storageKey: sources.storageKey,
+      path: sources.path,
+      name: sources.name,
+    })
+    .from(sources)
+    .where(eq(sources.id, sourceId))
+    .limit(1);
+
+  if (!row) return { success: false, error: "Document not found", url: null };
+  if (row.userId !== user.id) return { success: false, error: "Forbidden", url: null };
+
+  // Retourner l'URL publique du document
+  return { 
+    success: true, 
+    url: row.path || `${process.env.MINIO_PUBLIC_URL || 'http://localhost:9000'}/${process.env.MINIO_BUCKET_NAME || 'paschek-gpt'}/${row.storageKey}`,
+    name: row.name
+  };
+}
+
+export async function downloadDocument(sourceId: number) {
+  const user = await getCurrentUser();
+  if (!user) return { success: false, error: "Unauthorized", data: null };
+
+  const [row] = await db
+    .select({
+      id: sources.id,
+      userId: sources.userId,
+      storageKey: sources.storageKey,
+      name: sources.name,
+      mimeType: sources.mimeType,
+    })
+    .from(sources)
+    .where(eq(sources.id, sourceId))
+    .limit(1);
+
+  if (!row) return { success: false, error: "Document not found", data: null };
+  if (row.userId !== user.id) return { success: false, error: "Forbidden", data: null };
+
+  try {
+    const { getFile } = await import("@/lib/storage");
+    const bucket = process.env.MINIO_BUCKET_NAME || "paschek-gpt";
+    const fileBuffer = await getFile(bucket, row.storageKey);
+    
+    return { 
+      success: true, 
+      data: {
+        buffer: fileBuffer,
+        name: row.name,
+        mimeType: row.mimeType || 'application/pdf'
+      }
+    };
+  } catch (error) {
+    return { success: false, error: "Failed to retrieve document", data: null };
+  }
+}

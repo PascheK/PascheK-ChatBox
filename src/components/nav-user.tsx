@@ -3,7 +3,7 @@
 import {
   ChevronsUpDown,
   LogOut,
-  Sparkles,
+  Code,
 } from "lucide-react"
 
 import {
@@ -26,12 +26,23 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useUser } from "@/context/UserContext"
+import { useRouter } from "next/navigation"
 
 
 
 export function NavUser() {
-    const { user } = useUser();
-
+    const { user, setUser } = useUser();
+    const router = useRouter();
+  const handleLogOut = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      setUser(null);
+      router.push("/auth/login");
+      router.refresh();
+    } catch {
+      // Error handled silently
+    }
+  }
   const { isMobile } = useSidebar()
     const getUserInitials = () => {
     if (user?.firstname && user?.lastname) {
@@ -81,15 +92,15 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+              <DropdownMenuItem onClick={() => router.push("/devnotes")}>
+                <Code />
+                ChangeLog
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogOut}>
               <LogOut />
-              Log out
+              Déconnexion
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
