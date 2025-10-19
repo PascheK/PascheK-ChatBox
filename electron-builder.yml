@@ -9,6 +9,7 @@ files:
   - dist-electron/**
   - .next/**
   - package.json
+  - .env.local
 
 # ✅ Active ASAR (obligatoire sinon erreur index.js)
 asar: true
@@ -42,3 +43,8 @@ afterPack: ./scripts/after-pack.js
 extraResources:
   - from: .env.local
     to: .env.local
+
+publish:
+  provider: github
+  owner: PascheK
+  repo: PascheK-ChatBox
