@@ -8,7 +8,7 @@ import { ArrowLeft, GitBranch, Package, Calendar, User, Code, Sparkles } from "l
 
 // Informations de version - à mettre à jour manuellement ou via script
 const VERSION_INFO = {
-  version: "1.0.0",
+  version: "1.0.1",
   branch: "exp/electron", 
   lastUpdate: "20 Octobre 2025",
   author: "Killian Pasche",
@@ -17,6 +17,22 @@ const VERSION_INFO = {
 
 // Changelog - à mettre à jour à chaque release
 const CHANGELOG = [
+  {
+    version: "1.0.0",
+    date: "20 Octobre 2025",
+    type: "minor",
+    changes: [
+      "🚀 **Fonctionnalités de téléchargement/prévisualisation** des documents implémentées",
+      "🔍 **Recherche avancée révolutionnaire** avec Command Palette moderne",
+      "📥 **Interface d'upload repensée** avec drag & drop et filtrage intelligent",
+      "⚡ **Performance optimisée** avec debouncing et cache localStorage",
+      "🎨 **UX améliorée** : animations, états visuels, navigation clavier",
+      "🛠️ **Architecture server actions** pour téléchargement sécurisé",
+      "📊 **Historique des recherches** avec persistance et suggestions",
+      "🔧 **Filtres avancés** par type, date, format de fichier",
+      "✨ **Polish interface** : badges, compteurs, prévisualisations enrichies"
+    ]
+  },
   {
     version: "1.0.0",
     date: "20 Octobre 2025",
@@ -149,6 +165,34 @@ const CHANGELOG = [
 
       // 🔒 SÉCURITÉ & CONFIDENTIALITÉ
       "🔒 **Données utilisateur isolées** par authentification",
+      "🔒 **Validation des permissions** pour chaque action sur documents",
+      "🔒 **Sessions sécurisées** avec expiration et renouvellement",
+      
+      // 🆕 NOUVELLES FONCTIONNALITÉS v1.0.0 (Octobre 2025)
+      
+      // 📥 GESTION AVANCÉE DES DOCUMENTS
+      "📥 **Téléchargement sécurisé** des documents avec vérification d'autorisation",
+      "📥 **Prévisualisation en ligne** des PDF dans un nouvel onglet",
+      "📥 **Interface d'upload modernisée** avec drag & drop fluide",
+      "📥 **Indicateurs de progression** visuels pendant l'upload",
+      "📥 **Filtrage et recherche** dans la liste des documents",
+      "📥 **Actions en lot** avec menu contextuel par document",
+      "📥 **Gestion des erreurs** améliorée avec messages contextuels",
+      "📥 **URLs publiques optimisées** pour l'accès aux fichiers",
+
+      // 🔍 RECHERCHE INTELLIGENTE AVANCÉE  
+      "🔍 **Barre de recherche révolutionnaire** avec interface Command Palette",
+      "🔍 **Filtres avancés** : type (chat/document), période, format de fichier",
+      "🔍 **Historique de recherche** persistant avec localStorage",
+      "🔍 **Recherches récentes** facilement accessibles",
+      "🔍 **Navigation clavier** complète : ↑↓ pour naviguer, Entrée pour sélectionner",
+      "🔍 **Raccourcis multiples** : ⌘J, ⌘K pour ouvrir la recherche",
+      "🔍 **Prévisualisation enrichie** des résultats avec métadonnées",
+      "🔍 **Actions rapides** : nouveau chat, gestion documents depuis la recherche",
+      "🔍 **Debouncing intelligent** pour optimiser les performances",
+      "🔍 **Suggestions contextuelles** basées sur l'historique",
+      "🔍 **Interface responsive** adaptée mobile et desktop",
+      "🔍 **États visuels** : chargement, vide, résultats avec animations",
       "🔒 **Sessions expirantes** avec renouvellement automatique",
       "🔒 **Protection CSRF** via tokens sécurisés",
       "🔒 **Validation côté serveur** de toutes les entrées",
