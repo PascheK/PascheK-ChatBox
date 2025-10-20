@@ -14,7 +14,7 @@ export default async function Home() {
   const isDevMode = process.env.NODE_ENV === 'development';
   const user = await getCurrentUser();
 
-  if (isDevMode) {
+  if (!isDevMode) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/50">
         {/* Hero Section */}
