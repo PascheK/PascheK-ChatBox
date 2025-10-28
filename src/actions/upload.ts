@@ -3,18 +3,13 @@
 import { getCurrentUser } from "@/lib/auth";
 import { uploadFile, deleteFile } from "@/lib/storage";
 import { createHash } from "node:crypto";
-import * as pdfLib from "pdf-parse";
-const pdf = (pdfLib as any).default ?? (pdfLib as any);
+import { PDFParse } from "pdf-parse";
 import { chunkContent } from "@/lib/chunking";
 import { generateEmbeddings } from "@/lib/embeddings";
 import { db } from "@/lib/db-config";
 import { documents, sources } from "@/lib/db-schema";
 import { eq, and } from "drizzle-orm";
-import {
-  ensureNotDuplicateSource,
-  createSource,
-  insertChunks,
-} from "@/services/upload-service";
+import { ensureNotDuplicateSource, createSource, insertChunks } from "@/services/upload-service";
 
 export async function processPdfFile(formData: FormData) {
   const user = await getCurrentUser();
@@ -24,8 +19,9 @@ export async function processPdfFile(formData: FormData) {
   if (!file) return { success: false, error: "No file uploaded." };
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  const data = await pdf(buffer);
-  if (!data.text?.trim()) return { success: false, error: "PDF vide." };
+  const parser = new PDFParse(new Uint8Array(buffer));
+  const data = await parser.getText();
+  if (!data.text.trim()) return { success: false, error: "PDF vide." };
 
   const sha256 = createHash("sha256").update(buffer).digest("hex");
   if (!(await ensureNotDuplicateSource(user.id, sha256))) {
@@ -58,14 +54,11 @@ export async function processPdfFile(formData: FormData) {
     chunkItems.map((c: any, i: number) => ({
       content: texts[i],
       embedding: embeddings[i],
-      chunkIndex: typeof c === "string" ? i : c.chunkIndex ?? i,
-      charStart: typeof c === "string" ? 0 : c.start ?? 0,
-      charEnd:
-        typeof c === "string"
-          ? texts[i]?.length ?? 0
-          : c.end ?? texts[i]?.length ?? 0,
-      page: typeof c === "string" ? null : c.page ?? null,
-      metadata: typeof c === "string" ? null : c.metadata ?? null,
+      chunkIndex: typeof c === "string" ? i : (c.chunkIndex ?? i),
+      charStart: typeof c === "string" ? 0 : (c.start ?? 0),
+      charEnd: typeof c === "string" ? (texts[i]?.length ?? 0) : (c.end ?? texts[i]?.length ?? 0),
+      page: typeof c === "string" ? null : (c.page ?? null),
+      metadata: typeof c === "string" ? null : (c.metadata ?? null),
     }))
   );
 
@@ -136,10 +129,12 @@ export async function getDocumentUrl(sourceId: number) {
   if (row.userId !== user.id) return { success: false, error: "Forbidden", url: null };
 
   // Retourner l'URL publique du document
-  return { 
-    success: true, 
-    url: row.path || `${process.env.MINIO_PUBLIC_URL || 'http://localhost:9000'}/${process.env.MINIO_BUCKET_NAME || 'paschek-gpt'}/${row.storageKey}`,
-    name: row.name
+  return {
+    success: true,
+    url:
+      row.path ||
+      `${process.env.MINIO_PUBLIC_URL || "http://localhost:9000"}/${process.env.MINIO_BUCKET_NAME || "paschek-gpt"}/${row.storageKey}`,
+    name: row.name,
   };
 }
 
@@ -166,16 +161,16 @@ export async function downloadDocument(sourceId: number) {
     const { getFile } = await import("@/lib/storage");
     const bucket = process.env.MINIO_BUCKET_NAME || "paschek-gpt";
     const fileBuffer = await getFile(bucket, row.storageKey);
-    
-    return { 
-      success: true, 
+
+    return {
+      success: true,
       data: {
         buffer: fileBuffer,
         name: row.name,
-        mimeType: row.mimeType || 'application/pdf'
-      }
+        mimeType: row.mimeType || "application/pdf",
+      },
     };
-  } catch (error) {
+  } catch {
     return { success: false, error: "Failed to retrieve document", data: null };
   }
 }
